@@ -1,0 +1,21 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  creationTimestamp: null
+  name: template
+spec:
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+      name: template
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - image: IMAGE-NAME
+            name: template
+            resources: {}
+          restartPolicy: OnFailure
+  schedule: SCHEDULE-EXPRESSION

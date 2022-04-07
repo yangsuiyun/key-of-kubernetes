@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  name: template
+spec:
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      containers:
+      - image: IMAGE-NAME
+        name: template
+        resources: {}
+      restartPolicy: Never
+    parallelism: 1 #需要运行的任务总数
+    completions: 5 #并行运行个数

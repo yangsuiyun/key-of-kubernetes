@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: csi-driver-s3-secret
+  namespace: kube-system
+stringData:
+  accessKeyID: "miniominio"
+  secretAccessKey: "minio@321"
+  #s3地址，如果是aws需要设置为https://s3.<region>.amazonaws.com
+  endpoint: http://192.168.31.147:9090/
+  #如果不在S3上，请将其设置为“”
+  region: ""
