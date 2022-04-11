@@ -46,7 +46,7 @@
 
 TUN和TAP是由纯软件实现的Linux内核虚拟网络设备，是一种以太网设备，TUN和TAP包含字符设备驱动和网卡驱动两部分，其中字符设备驱动是模拟物理链路的数据接受和发送，网卡驱动是接受来自tcp/ip协议栈的网络分包并发送，常用于加密、VPN、隧道、虚拟机等
 
-![image-20220210161706272](/Users/cloud/Knowledge/22CloudNative/K8s learning/pics/image-20220210161706272.png)
+![image-20220210161706272](./pics/image-20220210161706272.png)
 
 ## iptables和Netfilter
 

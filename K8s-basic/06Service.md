@@ -11,7 +11,7 @@
 
 3. k8s服务发现原理图
 
-![image-20220213183903893](./pics/image-20220213183903893.png)
+![image-20220213183903893](../pics/image-20220213183903893.png)
 
 5. service的port
 
@@ -45,7 +45,13 @@
    * ipvs：通过Linux Kernel的netlink接口设置IPVS规则，效率和吞吐率最高；需要系统开启IPVS模块；且支持较多的负载均衡策略
    * kernelspace：windows server上用的
 
-7. 常用命令
+7. Service,Endpoint,pod关系
+
+   Service会指向endpoint，endpoint记录对应的pod的ip
+
+   ![image-20220409183252565](../pics/service-endpoint-pod.png)
+
+8. 常用命令
 
    * 会话保持机制：保证请求转发到相同pod，配置service.spec.sessionAffinity = ClientIP
 

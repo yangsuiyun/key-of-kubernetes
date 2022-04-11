@@ -1,21 +1,19 @@
+---
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  creationTimestamp: null
-  name: template
+  name: hello
 spec:
+  schedule: '*/1 * * * *'
   jobTemplate:
-    metadata:
-      creationTimestamp: null
-      name: template
     spec:
       template:
-        metadata:
-          creationTimestamp: null
         spec:
           containers:
-          - image: IMAGE-NAME
-            name: template
-            resources: {}
+            - name: hello
+              image: busybox
+              args:
+                - /bin/sh
+                - -c
+                - date; echo Hello from the Kubernetes cluster
           restartPolicy: OnFailure
-  schedule: SCHEDULE-EXPRESSION

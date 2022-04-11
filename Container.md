@@ -32,31 +32,17 @@ namespace 是用来做资源隔离的，在 Linux 内核上有七种 namespace�
 
 我们先从头看一下：
 
- 
-
 - 第一个是 mout namespace。mout namespace 就是保证容器看到的文件系统的视图，是容器镜像提供的一个文件系统，也就是说它看不见宿主机上的其他文件，除了通过 -v 参数 bound 的那种模式，是可以把宿主机上面的一些目录和文件，让它在容器里面可见的。
 
- 
-
-- 第二个是 uts namespace，这个 namespace 主要是隔离了 hostname 和 domain。
-
- 
+- 第二个是 uts namespace，这个 namespace 主要是隔离了 hostname 和 domain。 
 
 - 第三个是 pid namespace，这个 namespace 是保证了容器的 init 进程是以 1 号进程来启动的。
 
- 
-
 - 第四个是网络 namespace，除了容器用 host 网络这种模式之外，其他所有的网络模式都有一个自己的 network namespace 的文件。
-
- 
 
 - 第五个是 user namespace，这个 namespace 是控制用户 UID 和 GID 在容器内部和宿主机上的一个映射，不过这个 namespace 用的比较少。
 
- 
-
 - 第六个是 IPC namespace，这个 namespace 是控制了进程兼通信的一些东西，比方说信号量。
-
- 
 
 - 第七个是 cgroup namespace，上图右边有两张示意图，分别是表示开启和关闭 cgroup namespace。用 cgroup namespace 带来的一个好处是容器中看到的 cgroup 视图是以根的形式来呈现的，这样的话就和宿主机上面进程看到的 cgroup namespace 的一个视图方式是相同的。另外一个好处是让容器内部使用 cgroup 会变得更安全。
 
@@ -244,15 +230,9 @@ upper 并列的有一个 workdir，它的作用是充当一个中间层的作用
 
 按照水平层次来看的话:
 
- 
-
 - 第一层是 GRPC，containerd 对于上层来说是通过 GRPC serve 的形式来对上层提供服务的。Metrics 这个部分主要是提供 cgroup Metrics 的一些内容。
 
- 
-
 - 下面这层的左边是容器镜像的一个存储，中线 images、containers 下面是 Metadata，这部分 Matadata 是通过 **bootfs** 存储在磁盘上面的。右边的 Tasks 是管理容器的容器结构，Events 是对容器的一些操作都会有一个 Event 向上层发出，然后上层可以去订阅这个 Event，由此知道容器状态发生什么变化。
-
- 
 
 - 最下层是 Runtimes 层，这个 Runtimes 可以从类型区分，比如说 runC 或者是安全容器之类的。
 
@@ -274,16 +254,10 @@ upper 并列的有一个 workdir，它的作用是充当一个中间层的作用
 
 我们先看一下最左边，最左边是一个 CRI Client。一般就是 kubelet 通过 CRI 请求，向 containerd 发送请求。containerd 接收到容器的请求之后，会经过一个 containerd shim。containerd shim 是管理容器生命周期的，它主要负责两方面：
 
- 
-
 - 第一个是它会对 io 进行转发。
 - 第二是它会对信号进行传递。
 
- 
-
 图的上半部分画的是安全容器，也就是 kata 的一个流程，这个就不具体展开了。下半部分，可以看到有各种各样不同的 shim。下面介绍一下 containerd shim 的架构。
-
- 
 
 一开始在 containerd 中只有一个 shim，也就是蓝色框框起来的 containerd-shim。这个进程的意思是，不管是 kata 容器也好、runc 容器也好、gvisor 容器也好，上面用的 shim 都是 containerd。
 
