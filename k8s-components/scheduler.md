@@ -11,7 +11,7 @@ k8s原生的调度器原理如下图，informer不断从api server中拉取pod�
 
 <img src="../pics/调度原理.png" alt="image-20220316162837894" style="zoom:50%;" />
 
-新版调度器使用下面的scheduler framework，增加了扩展点，支持用户以插件的方式进行扩展。
+新版调度器增加下面的scheduler framework，增加了扩展点，支持用户以插件的方式进行扩展。
 
 ![img](../pics/scheduling-framework-extensions.png)
 

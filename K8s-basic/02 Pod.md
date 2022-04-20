@@ -36,7 +36,7 @@ spec:
 - Burstable：至少有一个容器存在内存和 CPU 的一个 request；弹性保证
 - BestEffort：request/limit 都不填；尽力而为
 
-系统时用request进行调度的。cpu资源而言，系统会对Guaranteed的pod单独划分cpu资源，Burstable和BestEffort则共用cpu，按权重来使用不同的时间片。内存资源而言，会对pod划分OOMScore，score越高越先被kill掉。Guaranteed为固定-998，BestEffort为固定1000，Burstable则是根据内存大小和节点关系划分2～999。发生驱逐时，优先BestEffort。
+系统用request进行调度的。cpu资源而言，系统会对Guaranteed的pod单独划分cpu资源，Burstable和BestEffort则共用cpu，按权重来使用不同的时间片。内存资源而言，会对pod划分OOMScore，score越高越先被kill掉。Guaranteed为固定-998，BestEffort为固定1000，Burstable则是根据内存大小和节点关系划分2～999。发生驱逐时，优先BestEffort。
 
 ## 资源Quota
 
@@ -78,7 +78,6 @@ spec:
          topologyKey: kubernetes.io/hostname #设置拓扑域，默认的还有topology.kubernetes.io/region,topology.kubernetes.io/zone
    ```
 
-   
 2. podAntiAffinity
    * requireDuringSchedulingIgnoredDuringExecution：强制反亲和
 
@@ -98,8 +97,8 @@ spec:
 
    1. 行为模式有：
 
-      1. NoSchedule：禁止pod调度来
-      2. PreferNoSchedule：尽量不调度来
+      1. PreferNoSchedule：尽量不调度来
+      2. NoSchedule：禁止pod调度来
       3. NoExecute：驱逐没有toleration的pod，并禁止调度新的
 
       ```yaml
