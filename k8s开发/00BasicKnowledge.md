@@ -79,6 +79,26 @@ Resource资源在kubernetes中的重要性是不言而喻的，常见的pod、se
 >
 > 资源对象描述文件在日常操作中频繁用到，一共由五部分组成：apiVersion、kind、metadata、spec、status，下图是官方的deployment描述文件，用于创建3个nginx pod，对着红框和文字就了解每个部分的作用了
 
+
+
+## Metadata字段概念
+
+### Labels
+
+标识型key：value元数据，用于筛选资源，组合资源的唯一方式
+
+### Selector
+
+用于类似SQL语句，对Labels进行选择
+
+### annotations
+
+用于存储资源的非标识性信息，扩展资源的spec/status。
+
+### ownereference
+
+表明父级资源对象，方便方向查找和级联删除
+
 ![img](../pics/yaml-spec.png)
 上图并没有status，该部分是用来反应当前资源对象状态的，体现在资源的数据结构中，如下所示:
 
@@ -190,4 +210,3 @@ func TestDiscoverySync(t *testing.T) {
 	}
 ```
 
-### 
