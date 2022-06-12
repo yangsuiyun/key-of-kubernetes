@@ -2,7 +2,7 @@
 
 Pod是k8s的逻辑概念，Pod类似为进程组，Pod中的container类似为进程，一个pod中的所有进程共享资源、紧密协作。容器本身是单进程模型，该进程就是应用进程。这样从外部就可以知道容器中的应用状态。容器如果是多进程，由一个主进程管理其它进程时，管理容器等于管理主进程而非应用本身。管理应用的生命周期会变得困难。
 
-<img src="/Users/cloud/Documents/Screen Shot 2022-06-01 at 17.01.22.png" alt="Screen Shot 2022-06-01 at 17.01.22" style="zoom:50%;" />
+<img src="../pics/pod构造.png" alt="Screen Shot 2022-06-01 at 17.01.22" style="zoom:50%;" />
 
 ## 容器内使用pod信息
 
@@ -101,7 +101,9 @@ spec:
 
 ### 资源Quota
 
-限制每个Namespace资源用量，超出限制时，用户无法提交新建。
+限制每个Namespace资源用量，超出限制时，用户无法提交新建。ResourceQuota的工作机制如下：
+
+![image-20220610090745081](../pics/resourceQuota原理.png)
 
 ```yaml
 apiVersion: v1
@@ -127,7 +129,7 @@ spec:
 - Burstable：至少有一个容器存在内存和 CPU 的一个 request；弹性保证
 - BestEffort：request/limit 都不填；尽力而为
 
-系统用request进行调度的。cpu资源而言，系统会对Guaranteed的pod单独划分cpu资源，Burstable和BestEffort则共用cpu，按权重来使用不同的时间片。内存资源而言，会对pod划分OOMScore，score越高越先被kill掉。Guaranteed为固定-998，BestEffort为固定1000，Burstable则是根据内存大小和节点关系划分2～999。发生驱逐时，优先BestEffort。
+系统用request进行调度的。cpu资源而言，系统会对Guaranteed的pod单独划分cpu资源，Burstable和BestEffort则共用cpu，按权重来使用不同的时间片。内存资源而言，会对pod划分OOMScore，score越高越先被kill掉。Guaranteed为固定-998，BestEffort为固定1000，Burstable则是根据内存大小和节点关系划分2～999。发生驱逐时，优先BestEffort。对相同服务质量的pod，OOMScore的基础分部分是内存使用百分比 * 1000，因此相同QoS的前提下优先kill使用内存百分比高的。
 
 
 

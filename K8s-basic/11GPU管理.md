@@ -4,11 +4,11 @@
 
 * Extend Resources：允许用户自定义资源名称。度量是整数级别；是一种Node级别的api，只需要通过PATCH API对Node对象的status部分更新即可
 
-  <img src="../pics/extended resources.png" alt="10.png" style="zoom: 50%;" />
+  <img src="../pics/extended resources.png" alt="10.png" style="zoom: 33%;" />
 
 * Device Plugin Framework允许第三方设备提供商以外置方式对设备进行全生命周期管理，Device Plugin Framework建立Kubernetes和Devices Plugin之间的桥梁，负责设备信息上报和调度选择;每个硬件都需要Device Plugin进行管理，通过GRPC于kubelet的Device Plugin Manager进行连接，
 
-  ![12.png](../pics/Device Plugin Framework.png)
+  <img src="../pics/Device Plugin Framework.png" alt="12.png" style="zoom:50%;" />
 
   需要注意的是 kubelet 在向 api-server 进行汇报的时候，只会汇报该 GPU 对应的数量。而 kubelet 自身的 Device Plugin Manager 会对这个 GPU 的 ID 列表进行保存，并用来具体的设备分配。而这个对于 Kubernetes 全局调度器来说，它不掌握这个 GPU 的 ID 列表，它只知道 GPU 的数量。
 

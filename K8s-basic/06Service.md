@@ -4,17 +4,19 @@ service用于为一组提供服务的pod抽象一个稳定的网络访问地址�
 
 
 
-## 基本原理：
+## 基本原理
 
-宏观层面看，Service会指向endpoint，endpoint记录对应的pod的ip；service相当于一组Pod的LB，外部应用访问service时，service会通过挑选出提供具体服务的pod，将流量转发到指定的pod中。
+逻辑层面看，Service会指向endpoint，endpoint记录对应的pod的ip；service相当于一组Pod的LB，外部应用访问service时，service会通过挑选出提供具体服务的pod，将流量转发到指定的pod中。
 
 <img src="../pics/service-endpoint-pod.png" alt="image-20220409183252565" style="zoom:50%;" />
 
 service是借助每个Node上的kube-proxy程序实现其功能，kube-proxy管理service的访问入口和service的Endpoints。
 
+<img src="../pics/kubeproxy原理.png" alt="Screen Shot 2022-06-08 at 21.28.57" style="zoom: 33%;" />
+
+<img src="../pics/service原理.png" style="zoom:33%;" />
+
 <img src="../pics/image-20220213183903893.png" alt="image-20220213183903893" style="zoom:50%;" />
-
-
 
 kube-proxy代理模式有四种：
 
@@ -25,7 +27,7 @@ kube-proxy代理模式有四种：
 
 
 
-## service访问方式：
+## service访问方式
 
 1. 集群内部
 
@@ -34,9 +36,13 @@ kube-proxy代理模式有四种：
 * 通过环境变量：在同一个 namespace 里的 pod 启动时，K8s 会把 service 的一些 IP 地址、端口，以及一些简单的配置，通过环境变量的方式放到 K8s 的 pod 里面。在 K8s pod 的容器启动之后，通过读取系统的环境变量比读取到 namespace 里面其他 service 配置的一个地址，或者是它的端口号等等。比如在集群的某一个 pod 里面，可以直接通过 curl $ 取到一个环境变量的值，比如取到 MY_SERVICE_SERVICE_HOST 就是它的一个 IP 地址，MY_SERVICE 就是刚才我们声明的 MY_SERVICE，SERVICE_PORT 就是它的端口号，这样也可以请求到集群里面的 MY_SERVICE 这个 service。
 
 2. Headless service：Pod通过service name直接解析到所有后端Pod IP，客户端自己选择。在定义中设置`ClusterIP`
+
 3. 向外暴露服务
-   * NodePort：每个node都会暴露集群中服务的端口，通过每个node都可以路由到指定pod
-   * LoadBalancer：在NodePort上面加了load balance，把所有它接触到的流量负载均衡到每一个集群节点的 node pod 上面去。然后 node pod 再转化成 ClusterIP，去访问到实际的 pod 上面
+   
+   <img src="../pics/对外暴露网络.png" style="zoom: 33%;" />
+   
+   * NodePort：每个node都会暴露集群中服务的端口，通过每个node都可以路由到指定pod。NodePort背后是Kube-Proxy，Kube-Proxy是沟通Service网络、Pod网络和节点网络的桥梁。
+   * LoadBalancer：在NodePort上面加了load balance，把所有它接触到的流量负载均衡到NodePort上。然后NodePort再转化成 ClusterIP，去访问到实际的 pod 上面
 
 
 4. service的port
@@ -92,7 +98,7 @@ spec:
 
 
 
-## 其它
+## 其它功能
 
 ### 端点分片（Endpoint Slices）
 

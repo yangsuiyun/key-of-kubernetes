@@ -1,4 +1,4 @@
-![Prometheus architecture](/Users/cloud/Knowledge/22CloudNative/K8s learning/pics/architecture.png)
+![Prometheus architecture](../pics/architecture.png)
 
 数据采集方式：
 

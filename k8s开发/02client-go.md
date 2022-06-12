@@ -77,3 +77,4 @@ https://github.com/kubernetes/client-go/blob/master/examples/dynamic-create-upda
 
 ![image-20210624155026580](../pics/clien-go-informer-workflow.png)
 
+![controller-controller 基本流程](../pics/client-go-controller-流程.png)

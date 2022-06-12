@@ -7,8 +7,15 @@ spec:
   podSelector:
     matchLabels:
       app: nginx
+  policyTypes:
+    - Ingress
+    - Engress  # 如果下面没有具体指出哪些pod，则是禁止所有。如果没有本行，表示不对engress做限制，则是允许所有
   ingress:
     - from:
-        - podSelector:
+        - namespaceSelector: #选择namespace
             matchLabels:
-              access: 'true'
+              user: alice
+          podSelector:  # 选择pod
+            matchLabels:
+              access: 'true'            
+
