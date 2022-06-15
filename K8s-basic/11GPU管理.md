@@ -1,4 +1,4 @@
-# kubernets原生GPU管理
+## kubernets原生GPU管理
 
 两种机制
 
@@ -18,7 +18,7 @@
 
 ## 社区方案
 
-![14.png](https://ucc.alicdn.com/pic/developer-ecology/c9cf0807c1224945b2d4834541506740.png)
+![14.png](../pics/GPU方案.png)
 
 1. GPU共享调度-阿里
 

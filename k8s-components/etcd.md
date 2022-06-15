@@ -4,11 +4,11 @@ Etcd是分布式的可靠的key-value存储
 
 Etcd通过Raft算法保证数据的一致性，只要有超过半数的节点数保持工作，并可以正常对外提供服务。term表示主节点任期号，主节点发生变化就加一，revision是数据全局版本号，数据发生变化就加一
 
-![img](/Users/cloud/Knowledge/22CloudNative/K8s learning/pics/0*26ZAlmI7mVHiOnMX.png)
+![img](../pics/0*26ZAlmI7mVHiOnMX.png)
 
 查询数据时，先通过index，key-》revision b+树查询到revision，再通过revision->value b+ 树找到对应的value
 
-<img src="/Users/cloud/Knowledge/22CloudNative/K8s learning/pics/0*RW8Dn4-siWj_kmpQ.png" alt="img" style="zoom:50%;" />
+<img src="../pics/0*RW8Dn4-siWj_kmpQ.png" alt="img" style="zoom:50%;" />
 
 ## 使用
 
@@ -27,7 +27,7 @@ Etcd通过Raft算法保证数据的一致性，只要有超过半数的节点数
 
 Etcd架构简图如下，raft层会有网络性能的阻碍，storage层有磁盘IO延迟的影响，索引层的锁，boltdb Tx 的锁以及 boltdb 本身的性能也会有影响
 
-![img](/Users/cloud/Knowledge/22CloudNative/K8s learning/pics/151540c30366959496.png)
+<img src="../pics/151540c30366959496.png" alt="img" style="zoom:50%;" />
 
 * 硬件部署上：采用ssd硬盘，尽量独立部署来保证cpu和内存
 * 客户端操作
